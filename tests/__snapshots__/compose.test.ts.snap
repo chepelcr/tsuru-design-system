@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`avatar composer > keeps the example looks stable 1`] = `
+[
+  "21bf609c6af3",
+  "0886bdc3a6ba",
+  "ebcb24aad3d0",
+  "67821942b97e",
+]
+`;

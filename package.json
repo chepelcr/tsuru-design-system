@@ -1,0 +1,64 @@
+{
+  "name": "@chepelcr/tsuru-design-system",
+  "version": "0.1.0",
+  "description": "Tsuru's shared design system: tokens, accessible UI components, the pixel-art engine and the customisable avatar used by Account and the virtual fairs.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./avatar-catalog.json": "./dist/avatar-catalog.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5180",
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "build": "tsc --noEmit && vite build --config vite.lib.config.ts && tsc -p tsconfig.build.json && node scripts/copy-assets.mjs",
+    "build:demo": "vite build",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "tsuru",
+    "design-system",
+    "pixel-art",
+    "avatar"
+  ],
+  "author": "jcampos",
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chepelcr/tsuru-design-system.git"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@testing-library/react": "16.3.0",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.2",
+    "jsdom": "25.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "5.6.3",
+    "vite": "^5.4.19",
+    "vitest": "2.1.9"
+  },
+  "packageManager": "pnpm@10.33.2"
+}

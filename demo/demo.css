@@ -1,0 +1,55 @@
+body {
+  margin: 0;
+  background: var(--tsr-bg);
+  color: var(--tsr-ink);
+  font-family: var(--tsr-font-body);
+}
+.demo {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px 16px 80px;
+}
+.demo-block {
+  margin-block: 32px;
+}
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-block: 12px;
+}
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-block: 16px;
+}
+.demo-matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 12px;
+}
+.demo-matrix figure {
+  margin: 0;
+  padding: 8px;
+  border: var(--tsr-border);
+  border-radius: 8px;
+  background: var(--tsr-surface);
+}
+.demo-frames {
+  display: flex;
+  gap: 2px;
+}
+.demo-matrix figcaption,
+.demo-note {
+  color: var(--tsr-muted);
+  font-size: 0.85rem;
+}
+.demo-editor .tsr-editor {
+  padding: 20px;
+  border: var(--tsr-border);
+  border-top: 0;
+  border-radius: 0 0 12px 12px;
+  background: var(--tsr-surface);
+}

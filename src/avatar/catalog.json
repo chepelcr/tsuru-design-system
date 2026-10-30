@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "limits": {
+    "accessories": 4
+  },
+  "poses": ["stand", "sit"],
+  "directions": ["front", "right", "back", "left"],
+  "skin_tones": ["#f6d8c2", "#ecc19f", "#d8a47b", "#c4875c", "#a96d47", "#7e4c31", "#553422"],
+  "hair_colors": ["#26201d", "#47302a", "#6a4430", "#7e3520", "#b8552a", "#e0b35c", "#a3a3a3", "#ececea"],
+  "swatches": ["#1f6f6b", "#2f6f45", "#3f7a4a", "#8a5a33", "#c0622e", "#e2b33c", "#7a4ca0", "#b2384f", "#2f5f8f", "#2b2f36", "#f2ece0", "#9aa3a6"],
+  "slots": {
+    "body": [
+      { "id": "standard", "label": "Estándar" },
+      { "id": "broad", "label": "Amplio" }
+    ],
+    "facial_hair": [
+      { "id": "none", "label": "Sin vello facial" },
+      { "id": "beard", "label": "Barba" },
+      { "id": "mustache", "label": "Bigote" }
+    ],
+    "hair": [
+      { "id": "short", "label": "Corto" },
+      { "id": "curly", "label": "Rizado corto" },
+      { "id": "afro", "label": "Afro" },
+      { "id": "bun", "label": "Moño" },
+      { "id": "bob", "label": "Melena" },
+      { "id": "long", "label": "Largo liso" },
+      { "id": "wavy", "label": "Largo ondulado" },
+      { "id": "braids", "label": "Trenzas" },
+      { "id": "buzz", "label": "Rapado" },
+      { "id": "bald", "label": "Sin cabello" }
+    ],
+    "top": [
+      { "id": "tee", "label": "Camiseta", "color": "#f2ece0", "tint": true },
+      { "id": "shirt", "label": "Camisa", "color": "#f2ece0", "tint": true },
+      { "id": "hoodie", "label": "Sudadera", "color": "#7a4ca0", "tint": true },
+      { "id": "sweater", "label": "Suéter", "color": "#e9dcc4", "tint": true },
+      { "id": "jacket", "label": "Chaqueta", "color": "#3f7a4a", "tint": true },
+      { "id": "blouse", "label": "Blusa", "color": "#e2b33c", "tint": true }
+    ],
+    "bottom": [
+      { "id": "jeans", "label": "Jeans", "color": "#33507a", "tint": true },
+      { "id": "trousers", "label": "Pantalón", "color": "#4d5b33", "tint": true },
+      { "id": "shorts", "label": "Pantalón corto", "color": "#8a6a45", "tint": true },
+      { "id": "skirt", "label": "Falda", "color": "#b2384f", "tint": true }
+    ],
+    "dress": [
+      { "id": "midi", "label": "Vestido camisero", "color": "#1f6f6b", "tint": true },
+      { "id": "sundress", "label": "Vestido floreado", "color": "#e2b33c", "tint": true },
+      { "id": "long", "label": "Vestido largo", "color": "#b2384f", "tint": true }
+    ],
+    "shoes": [
+      { "id": "sneakers", "label": "Tenis", "color": "#f4f1ea", "tint": true },
+      { "id": "boots", "label": "Botas", "color": "#5a3a24", "tint": true },
+      { "id": "sandals", "label": "Sandalias", "color": "#8a5a33", "tint": true },
+      { "id": "flats", "label": "Zapatos", "color": "#2b2f36", "tint": true }
+    ],
+    "bag": [
+      { "id": "crossbody", "label": "Bolso cruzado", "color": "#8a5a33", "tint": true },
+      { "id": "backpack", "label": "Mochila", "color": "#2b2f36", "tint": true },
+      { "id": "tote", "label": "Bolsa de tela", "color": "#efe6d2", "tint": true },
+      { "id": "handbag", "label": "Cartera", "color": "#9b3a4a", "tint": true }
+    ],
+    "accessory": [
+      { "id": "glasses", "label": "Anteojos", "group": "eyes", "color": "#2b2f36", "tint": false },
+      { "id": "sunglasses", "label": "Lentes de sol", "group": "eyes", "color": "#1d2024", "tint": false },
+      { "id": "earrings", "label": "Aretes", "group": "ears", "color": "#e2b33c", "tint": false },
+      { "id": "necklace", "label": "Collar", "group": "neck", "color": "#e2b33c", "tint": false },
+      { "id": "scarf", "label": "Bufanda", "group": "neck", "color": "#c0442e", "tint": true },
+      { "id": "hat", "label": "Sombrero", "group": "head", "color": "#d9b77a", "tint": true },
+      { "id": "cap", "label": "Gorra", "group": "head", "color": "#2f5f8f", "tint": true },
+      { "id": "headband", "label": "Vincha", "group": "head", "color": "#2f6f45", "tint": true }
+    ],
+    "wheelchair": [
+      { "id": "classic", "label": "Clásica", "color": "#2b2f36", "tint": true },
+      { "id": "sport", "label": "Deportiva", "color": "#2f5f8f", "tint": true }
+    ]
+  },
+  "wheelchair_colors": ["#2b2f36", "#2f5f8f", "#b2384f", "#7a4ca0", "#2f6f45", "#9aa3a6"],
+  "examples": [
+    {
+      "label": "Chaqueta y mochila",
+      "profile": {
+        "v": 2, "body": "standard", "skin": "#7e4c31", "facial_hair": "beard",
+        "hair": { "style": "curly", "color": "#26201d" },
+        "top": { "id": "jacket", "color": "#3f7a4a" }, "bottom": { "id": "jeans", "color": "#33507a" }, "dress": null,
+        "shoes": { "id": "sneakers", "color": "#f4f1ea" }, "bag": { "id": "backpack", "color": "#2b2f36" },
+        "accessories": [{ "id": "glasses" }],
+        "wheelchair": { "enabled": false, "model": "classic", "color": "#2b2f36" }
+      }
+    },
+    {
+      "label": "Vestido y bolsa de tela",
+      "profile": {
+        "v": 2, "body": "standard", "skin": "#ecc19f", "facial_hair": "none",
+        "hair": { "style": "wavy", "color": "#a3a3a3" },
+        "top": null, "bottom": null, "dress": { "id": "sundress", "color": "#e58a7a" },
+        "shoes": { "id": "sandals", "color": "#8a5a33" }, "bag": { "id": "tote", "color": "#efe6d2" },
+        "accessories": [{ "id": "necklace" }],
+        "wheelchair": { "enabled": false, "model": "classic", "color": "#2b2f36" }
+      }
+    },
+    {
+      "label": "Silla deportiva",
+      "profile": {
+        "v": 2, "body": "standard", "skin": "#c4875c", "facial_hair": "none",
+        "hair": { "style": "long", "color": "#47302a" },
+        "top": { "id": "hoodie", "color": "#7a4ca0" }, "bottom": { "id": "jeans", "color": "#33507a" }, "dress": null,
+        "shoes": { "id": "sneakers", "color": "#f4f1ea" }, "bag": null,
+        "accessories": [{ "id": "glasses" }],
+        "wheelchair": { "enabled": true, "model": "sport", "color": "#2b2f36" }
+      }
+    },
+    {
+      "label": "Blusa y bolso",
+      "profile": {
+        "v": 2, "body": "broad", "skin": "#f6d8c2", "facial_hair": "none",
+        "hair": { "style": "curly", "color": "#e0b35c" },
+        "top": { "id": "jacket", "color": "#e2b33c" }, "bottom": { "id": "trousers", "color": "#4d5b33" }, "dress": null,
+        "shoes": { "id": "sneakers", "color": "#f4f1ea" }, "bag": { "id": "crossbody", "color": "#b2384f" },
+        "accessories": [],
+        "wheelchair": { "enabled": false, "model": "classic", "color": "#2b2f36" }
+      }
+    }
+  ]
+}

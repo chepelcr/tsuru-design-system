@@ -1,0 +1,216 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Pixelify+Sans:wght@500;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap");
+
+/*
+ * Tsuru design tokens. Every name carries the --tsr- prefix so an app can keep
+ * its own variables alongside. The palette is the approved forest-and-cream
+ * direction (sketches 03, 05 and 06, 2026-10-29) merged with the fair's game
+ * colours. Components read only these variables; apps may override them.
+ */
+:root {
+  /* Surfaces */
+  --tsr-bg: #faf7ee;
+  --tsr-surface: #fffdf7;
+  --tsr-surface-sunken: #f3f1e6;
+  --tsr-surface-raised: #ffffff;
+  --tsr-line: #dfe1d4;
+  --tsr-line-strong: #c7ccb9;
+
+  /* Text */
+  --tsr-ink: #123a32;
+  --tsr-ink-soft: #2c4a42;
+  --tsr-muted: #5c6a63;
+  --tsr-link: #17634f;
+
+  /* Brand and actions */
+  --tsr-brand: #154a3f;
+  --tsr-brand-hover: #0f3b32;
+  --tsr-brand-ink: #ffffff;
+  --tsr-accent: #e6f1cc;
+  --tsr-accent-ink: #1d4a25;
+  --tsr-focus: #6f9a3d;
+
+  /* Game palette (fair header, pixel frames, banners) */
+  --tsr-game-bar: #1f4d33;
+  --tsr-game-bar-light: #2e6b45;
+  --tsr-game-bar-dark: #163926;
+  --tsr-game-cream: #fbf6ea;
+  --tsr-game-lime: #9bc53d;
+  --tsr-game-gold: #e8b83a;
+  --tsr-game-ink: #1f3d2b;
+  --tsr-pixel-scene: #e3f0c8;
+
+  /* Status tones: background, text and icon. Never colour alone — every chip
+     also states its status in words. */
+  --tsr-success-bg: #dff0d5;
+  --tsr-success-ink: #1d5a2c;
+  --tsr-success-icon: #1f7a3a;
+  --tsr-warning-bg: #fbe8b8;
+  --tsr-warning-ink: #6e4706;
+  --tsr-warning-icon: #b07a12;
+  --tsr-review-bg: #fde3cc;
+  --tsr-review-ink: #9a3f06;
+  --tsr-review-icon: #d06a12;
+  --tsr-pending-bg: #e8e9e3;
+  --tsr-pending-ink: #3a4440;
+  --tsr-pending-icon: #59625e;
+  --tsr-info-bg: #dcebf5;
+  --tsr-info-ink: #1d4b6e;
+  --tsr-info-icon: #2f6f9e;
+  --tsr-danger-bg: #f8dfdb;
+  --tsr-danger-ink: #8e2b24;
+  --tsr-danger-icon: #b2382f;
+  --tsr-notice-bg: #fbf1dc;
+  --tsr-notice-ink: #5a4214;
+
+  /* Shop marks (store icon tiles in tables) */
+  --tsr-mark-rose: #fbe1df;
+  --tsr-mark-leaf: #e8f2d9;
+  --tsr-mark-sky: #dcebf8;
+  --tsr-mark-sand: #f5e8cf;
+
+  /* Typography */
+  --tsr-font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --tsr-font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --tsr-font-pixel: "Pixelify Sans", "DM Sans", system-ui, sans-serif;
+  --tsr-text-xs: 0.78rem;
+  --tsr-text-sm: 0.875rem;
+  --tsr-text-md: 1rem;
+  --tsr-text-lg: 1.125rem;
+  --tsr-text-xl: 1.375rem;
+  --tsr-text-2xl: 1.75rem;
+  --tsr-text-display: clamp(2rem, 4vw, 3.2rem);
+  --tsr-weight-regular: 400;
+  --tsr-weight-medium: 500;
+  --tsr-weight-semibold: 600;
+  --tsr-weight-bold: 700;
+  --tsr-leading: 1.5;
+
+  /* Spacing (4 px base) */
+  --tsr-space-1: 4px;
+  --tsr-space-2: 8px;
+  --tsr-space-3: 12px;
+  --tsr-space-4: 16px;
+  --tsr-space-5: 20px;
+  --tsr-space-6: 24px;
+  --tsr-space-8: 32px;
+  --tsr-space-10: 40px;
+  --tsr-space-12: 48px;
+
+  /* Shape */
+  --tsr-radius-xs: 6px;
+  --tsr-radius-sm: 8px;
+  --tsr-radius-md: 12px;
+  --tsr-radius-lg: 16px;
+  --tsr-radius-xl: 22px;
+  --tsr-radius-pill: 999px;
+  --tsr-border: 1px solid var(--tsr-line);
+  --tsr-shadow-sm: 0 1px 2px rgb(18 58 50 / 6%);
+  --tsr-shadow-md: 0 6px 18px rgb(18 58 50 / 8%);
+  --tsr-shadow-game: 0 4px 0 rgb(0 0 0 / 22%);
+
+  /* Interaction */
+  --tsr-touch: 44px;
+  --tsr-duration: 160ms;
+  --tsr-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  color-scheme: light;
+}
+
+/* Dark: the same forest palette at night. Applies when the system asks for it
+   (unless the app pins light) or when the app sets data-theme="dark". */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --tsr-bg: #0f1a17;
+    --tsr-surface: #15231f;
+    --tsr-surface-sunken: #1b2c27;
+    --tsr-surface-raised: #1c2f29;
+    --tsr-line: #2b3f38;
+    --tsr-line-strong: #3b544b;
+    --tsr-ink: #eef3ea;
+    --tsr-ink-soft: #d4dfd6;
+    --tsr-muted: #a7b6ae;
+    --tsr-link: #9fd1b5;
+    --tsr-brand: #9fd1b5;
+    --tsr-brand-hover: #b8e0c8;
+    --tsr-brand-ink: #0f1f1a;
+    --tsr-accent: #26402f;
+    --tsr-accent-ink: #d7efbd;
+    --tsr-focus: #a6cf6b;
+    --tsr-pixel-scene: #23392c;
+    --tsr-success-bg: #1d3a26;
+    --tsr-success-ink: #bfe6c7;
+    --tsr-success-icon: #7fd093;
+    --tsr-warning-bg: #3b2f12;
+    --tsr-warning-ink: #f3d894;
+    --tsr-warning-icon: #e6b748;
+    --tsr-review-bg: #40260f;
+    --tsr-review-ink: #f7c79c;
+    --tsr-review-icon: #f39a4b;
+    --tsr-pending-bg: #29312e;
+    --tsr-pending-ink: #cfd6d2;
+    --tsr-pending-icon: #a4aeaa;
+    --tsr-info-bg: #142e42;
+    --tsr-info-ink: #bcdcf3;
+    --tsr-info-icon: #79b5e2;
+    --tsr-danger-bg: #3d1a17;
+    --tsr-danger-ink: #f3bdb6;
+    --tsr-danger-icon: #ec7f73;
+    --tsr-notice-bg: #33291a;
+    --tsr-notice-ink: #ecd9b1;
+    --tsr-mark-rose: #3a2423;
+    --tsr-mark-leaf: #233a26;
+    --tsr-mark-sky: #1b3043;
+    --tsr-mark-sand: #3a3020;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --tsr-bg: #0f1a17;
+  --tsr-surface: #15231f;
+  --tsr-surface-sunken: #1b2c27;
+  --tsr-surface-raised: #1c2f29;
+  --tsr-line: #2b3f38;
+  --tsr-line-strong: #3b544b;
+  --tsr-ink: #eef3ea;
+  --tsr-ink-soft: #d4dfd6;
+  --tsr-muted: #a7b6ae;
+  --tsr-link: #9fd1b5;
+  --tsr-brand: #9fd1b5;
+  --tsr-brand-hover: #b8e0c8;
+  --tsr-brand-ink: #0f1f1a;
+  --tsr-accent: #26402f;
+  --tsr-accent-ink: #d7efbd;
+  --tsr-focus: #a6cf6b;
+  --tsr-pixel-scene: #23392c;
+  --tsr-success-bg: #1d3a26;
+  --tsr-success-ink: #bfe6c7;
+  --tsr-success-icon: #7fd093;
+  --tsr-warning-bg: #3b2f12;
+  --tsr-warning-ink: #f3d894;
+  --tsr-warning-icon: #e6b748;
+  --tsr-review-bg: #40260f;
+  --tsr-review-ink: #f7c79c;
+  --tsr-review-icon: #f39a4b;
+  --tsr-pending-bg: #29312e;
+  --tsr-pending-ink: #cfd6d2;
+  --tsr-pending-icon: #a4aeaa;
+  --tsr-info-bg: #142e42;
+  --tsr-info-ink: #bcdcf3;
+  --tsr-info-icon: #79b5e2;
+  --tsr-danger-bg: #3d1a17;
+  --tsr-danger-ink: #f3bdb6;
+  --tsr-danger-icon: #ec7f73;
+  --tsr-notice-bg: #33291a;
+  --tsr-notice-ink: #ecd9b1;
+  --tsr-mark-rose: #3a2423;
+  --tsr-mark-leaf: #233a26;
+  --tsr-mark-sky: #1b3043;
+  --tsr-mark-sand: #3a3020;
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --tsr-duration: 0ms;
+  }
+}
