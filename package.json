@@ -1,6 +1,6 @@
 {
   "name": "@chepelcr/tsuru-design-system",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Tsuru's shared design system: tokens, accessible UI components, the pixel-art engine and the customisable avatar used by Account and the virtual fairs.",
   "type": "module",
   "main": "./dist/index.js",
