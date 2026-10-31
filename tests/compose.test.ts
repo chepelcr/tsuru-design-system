@@ -89,3 +89,37 @@ describe("avatar composer", () => {
     expect(top.flat()).not.toContain(DEFAULT_AVATAR.skin);
   });
 });
+
+describe("altura y peso", () => {
+  const top = (cells: Cells) => cells.findIndex((row) => row.some(Boolean));
+  const bottom = (cells: Cells) => cells.length - 1 - [...cells].reverse().findIndex((row) => row.some(Boolean));
+  const widthAt = (cells: Cells, r: number) => cells[r].filter(Boolean).length;
+  const steps = [-2, -1, 0, 1, 2];
+
+  it("grows upward from the floor and widens the body, in every direction and pose", () => {
+    for (const direction of directions)
+      for (const pose of poses) {
+        const tops = steps.map((height) => top(composeAvatar({ ...DEFAULT_AVATAR, height }, { direction, pose }).cells));
+        const feet = steps.map((height) => bottom(composeAvatar({ ...DEFAULT_AVATAR, height }, { direction, pose }).cells));
+        // Taller means the head sits higher; the feet never move.
+        for (let k = 1; k < tops.length; k++) expect(tops[k], `${direction}/${pose}`).toBeLessThan(tops[k - 1]);
+        expect(new Set(feet).size).toBe(1);
+        const waist = bottom(composeAvatar(DEFAULT_AVATAR, { direction, pose }).cells) - 14;
+        const widths = steps.map((weight) => widthAt(composeAvatar({ ...DEFAULT_AVATAR, weight }, { direction, pose }).cells, waist));
+        for (let k = 1; k < widths.length; k++) expect(widths[k], `${direction}/${pose}`).toBeGreaterThanOrEqual(widths[k - 1]);
+        expect(widths[4]).toBeGreaterThan(widths[0]);
+      }
+  });
+
+  it("keeps the extremes inside the sprite box and the wheelchair on the floor", () => {
+    for (const height of [-2, 2])
+      for (const weight of [-2, 2])
+        for (const direction of directions) {
+          const look = { ...DEFAULT_AVATAR, height, weight, accessories: [{ id: "hat" }], wheelchair: { enabled: true, model: "classic", color: "#2b2f36" as const } };
+          const cells = composeAvatar(look, { direction }).cells;
+          expect(top(cells)).toBeGreaterThan(0);
+          expect(cells.length).toBe(SPRITE_SIZE.height);
+          expect(bottom(cells)).toBe(bottom(composeAvatar({ ...look, height: 0, weight: 0 }, { direction }).cells));
+        }
+  });
+});

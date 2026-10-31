@@ -61,14 +61,16 @@ images, roles or speed — so a fair room can relay it safely.
   and wheelchair models, with tintable flags, default colours, palettes and the
   example looks. **The store backend vendors a copy** (`be/store-be/app/data/avatar_catalog.json`,
   hash-pinned in its tests); copy it again whenever this file changes.
-- `schema.ts` — `AvatarProfile` version 2, `DEFAULT_AVATAR`, `migrateV1` (the
+- `schema.ts` — `AvatarProfile` version 2 (with `height` and `weight`, −2…2: altura and peso like a Mii), `DEFAULT_AVATAR`, `migrateV1` (the
   first Account avatar: hair/outfit/accessory), `normalizeAvatar` (any stored
   value → drawable profile) and `validateAvatar` (what the server would refuse).
 - `compose.ts` — the layered composer on a 36 × 47 cell grid: body → shoes →
   bottom/dress → top → bag → hair → accessories, with the wheelchair split behind
   and in front. Four directions (left mirrors right), standing and seated poses
   (a wheelchair always sits), two idle and six walking frames: 32 positions per
-  pose. `layers` draws single pieces for option thumbnails.
+  pose. Altura adds or removes rows in the shins and torso (the feet stay on the
+  floor); peso adds or removes a column on each side below the neck. `layers`
+  draws single pieces for option thumbnails.
 - `scene.ts` — the editor's paved isometric tile, the client panel's garden card,
   the portrait and the fair banner sides.
 - Components — `AvatarSprite`, `AvatarPortrait`, `AvatarGarden`, `AvatarStage`

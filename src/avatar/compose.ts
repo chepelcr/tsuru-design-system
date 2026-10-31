@@ -60,6 +60,10 @@ export const FRAMES: Record<Motion, number> = { idle: 2, walk: 6 };
 export const INK = "#2a1c14";
 const W = 36;
 const H = 47;
+/** Empty rows above the drawing, so tall avatars and hats keep their tops. */
+export const PAD = 5;
+/** Rows (in the final sprite) that hold the head and hair, for head thumbnails. */
+export const HEAD_ROWS = 24 + PAD;
 const EYE = "#22201f";
 const SHINE = "#fdf8ee";
 const LINING = "#f2ece0";
@@ -911,6 +915,56 @@ const VIEWS: Record<Direction, { view: View; flip: boolean }> = {
   left: { view: "side", flip: true },
 };
 
+const emptyRow = () => Array.from({ length: W }, () => null as string | null);
+const padTop = (g: Cells): Cells => [...Array.from({ length: PAD }, emptyRow), ...g];
+
+/**
+ * Altura and peso, −2…2 (like a Mii's sliders). Height adds or removes rows
+ * inside the legs and torso — the feet stay on the floor and the head moves up
+ * — and only above the hips when seated, so the wheelchair still fits. Weight
+ * adds or removes columns inside the torso and legs below the neck, one on each
+ * side, so the body stays centred under the head.
+ */
+const proportion = (input: Cells, view: View, seated: boolean, height: number, weight: number): Cells => {
+  const g = input.map((row) => [...row]);
+  const steps = (v: number) => Math.min(2, Math.abs(Math.round(v)));
+  // Each height step is two rows: one in the shins and one in the torso
+  // (both in the torso when seated). Worked bottom-up; rows above an edit
+  // move by one per edit already made.
+  const n = steps(height);
+  const rows = seated ? [...Array(n).fill(28), ...Array(n).fill(25)] : [...Array(n).fill(39), ...Array(n).fill(28)];
+  rows.forEach((row, done) => {
+    if (height > 0) {
+      const r = row + PAD - done;
+      g.splice(r, 0, [...g[r]]);
+      g.shift();
+    } else {
+      g.splice(row + PAD + done, 1);
+      g.unshift(emptyRow());
+    }
+  });
+  // Each weight step is one column on each side, inside the torso and legs.
+  const [right, left] = view === "side" ? [19, 15] : [20, 15];
+  const neck = 20 + PAD - Math.sign(height) * rows.length;
+  for (let r = Math.max(0, neck); r < g.length; r++) {
+    const line = g[r];
+    for (let k = 0; k < steps(weight); k++) {
+      if (weight > 0) {
+        line.splice(right, 0, line[right]);
+        line.pop();
+        line.splice(left, 0, line[left]);
+        line.shift();
+      } else {
+        line.splice(right, 1);
+        line.push(null);
+        line.splice(left, 1);
+        line.unshift(null);
+      }
+    }
+  }
+  return g;
+};
+
 /** Moves rows 0..until down (dy > 0) or up (dy < 0) by one; used for the idle breath and the walking bob. */
 const bob = (g: Cells, until: number, dy: number) => {
   if (dy > 0) {
@@ -936,7 +990,7 @@ export const composeAvatar = (profile: AvatarProfile, options: ComposeOptions = 
 
   const { view, flip } = VIEWS[direction];
   const seated = pose === "sit";
-  const geo = geometry(view, seated, profile.body === "broad", motion, frame);
+  const geo = geometry(view, seated, false, motion, frame);
   const g = grid();
   const ctx: Ctx = { g, geo, p: profile, view, frame, motion };
   const has = (layer: Layer) => layers.has(layer);
@@ -959,7 +1013,7 @@ export const composeAvatar = (profile: AvatarProfile, options: ComposeOptions = 
   if (motion === "idle" && frame === 1) bob(g, seated ? 31 : 33, 1);
   if (motion === "walk" && !seated && (frame === 1 || frame === 4)) bob(g, 34, -1);
 
-  let cells = outlined(g, INK);
+  let cells = outlined(proportion(padTop(g), view, seated, profile.height, profile.weight), INK);
   if (has("wheelchair") && profile.wheelchair.enabled) {
     const behind = grid();
     const front = grid();
@@ -968,10 +1022,10 @@ export const composeAvatar = (profile: AvatarProfile, options: ComposeOptions = 
       drawChairBack(behind, profile, view);
       drawChairFront(front, profile, view, frame, motion, false);
     }
-    const composed = outlined(behind, INK);
+    const composed = outlined(padTop(behind), INK);
     merge(composed, cells);
-    const pad = outlined(grid(), INK).map((row) => row.map(() => null as string | null));
-    for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) pad[r + 1][c + 1] = front[r][c];
+    const pad: Cells = Array.from({ length: H + PAD + 2 }, () => Array.from({ length: W + 2 }, () => null));
+    padTop(front).forEach((row, r) => row.forEach((hex, c) => (pad[r + 1][c + 1] = hex)));
     // Solid chair parts get their own outline; tyres are already dark.
     merge(composed, outlinedSolid(pad));
     cells = composed;
@@ -1040,4 +1094,4 @@ export const drawCentered = (r: Raster, sprite: Sprite) => {
 };
 
 /** The sprite's size in cells, for sizing canvases. */
-export const SPRITE_SIZE = { width: W + 2, height: H + 2 } as const;
+export const SPRITE_SIZE = { width: W + 2, height: H + PAD + 2 } as const;

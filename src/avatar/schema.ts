@@ -17,7 +17,12 @@ export interface Piece {
 
 export interface AvatarProfile {
   v: 2;
+  /** Legacy body shape; superseded by `weight` ("broad" reads as weight 1). */
   body: string;
+  /** Altura, −2 (muy bajo) … 2 (muy alto). */
+  height: number;
+  /** Peso, −2 (muy delgado) … 2 (muy robusto). */
+  weight: number;
   skin: Hex;
   facial_hair: string;
   hair: { style: string; color: Hex };
@@ -46,9 +51,16 @@ export interface CatalogItem {
   group?: string;
 }
 
+export interface Proportion {
+  min: number;
+  max: number;
+  labels: string[];
+}
+
 export interface Catalog {
   version: number;
   limits: { accessories: number };
+  proportions: { height: Proportion; weight: Proportion };
   poses: Pose[];
   directions: Direction[];
   skin_tones: string[];
@@ -82,6 +94,8 @@ export const pieceColor = (slot: Slot, piece: Piece | null | undefined): Hex => 
 export const DEFAULT_AVATAR: AvatarProfile = {
   v: 2,
   body: "standard",
+  height: 0,
+  weight: 0,
   skin: "#d8a47b",
   facial_hair: "none",
   hair: { style: "wavy", color: "#47302a" },
@@ -115,6 +129,11 @@ export const migrateV1 = (old: AvatarV1): AvatarProfile => {
   };
 };
 
+const proportionOf = (name: "height" | "weight", value: unknown): number => {
+  const { min, max } = catalog.proportions[name];
+  return typeof value === "number" && Number.isFinite(value) ? Math.max(min, Math.min(max, Math.round(value))) : 0;
+};
+
 const piece = (slot: Slot, value: unknown): Piece | null => {
   if (!value || typeof value !== "object") return null;
   const { id, color } = value as { id?: unknown; color?: unknown };
@@ -145,9 +164,12 @@ export const normalizeAvatar = (value: unknown): AvatarProfile => {
     groups.add(group);
     accessories.push(p);
   }
+  const broad = raw.body === "broad" && raw.weight === undefined;
   return {
     v: 2,
-    body: item("body", raw.body as string)?.id ?? d.body,
+    body: broad ? "standard" : item("body", raw.body as string)?.id ?? d.body,
+    height: proportionOf("height", raw.height),
+    weight: broad ? 1 : proportionOf("weight", raw.weight),
     skin: isHex(raw.skin) ? (raw.skin.toLowerCase() as Hex) : d.skin,
     facial_hair: item("facial_hair", raw.facial_hair as string)?.id ?? d.facial_hair,
     hair: {
@@ -199,6 +221,11 @@ export const validateAvatar = (value: AvatarProfile): string[] => {
   for (const p of [value.top, value.bottom, value.dress, value.shoes, value.bag, ...(value.accessories ?? [])])
     if (p?.color !== undefined && !isHex(p.color)) errors.push(`${p.id}.color: not #RRGGBB`);
   if ((value.accessories ?? []).length > catalog.limits.accessories) errors.push("too many accessories");
+  for (const name of ["height", "weight"] as const) {
+    const { min, max } = catalog.proportions[name];
+    const v = value[name];
+    if (!Number.isInteger(v) || v < min || v > max) errors.push(`${name}: integer ${min}…${max}`);
+  }
   const groups = new Set<string>();
   for (const a of value.accessories ?? []) {
     const group = item("accessory", a.id)?.group;

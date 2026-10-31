@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { PixelCanvas } from "../pixel/PixelCanvas";
 import { Button } from "../components/primitives";
-import { CategoryTabs, ChoiceGroup, OptionTile, SwatchRow } from "../components/choice";
+import { CategoryTabs, ChoiceGroup, OptionTile, RangeField, SwatchRow } from "../components/choice";
 import { EyeIcon, ResetIcon } from "../components/icons";
 import { AvatarFigure, AvatarStage, DIRECTIONS, useReducedMotion } from "./components";
-import { composeAvatar, cropSprite, type Layer, type Sprite } from "./compose";
+import { composeAvatar, cropSprite, HEAD_ROWS, type Layer, type Sprite } from "./compose";
 import { catalog, pieceColor, type AvatarProfile, type Direction, type Hex, type Piece, type Slot } from "./schema";
 
 // The avatar editor from the approved sketch 03: categories and skin tone on the
@@ -32,7 +32,7 @@ function Thumb({ sprite, box = THUMB }: { sprite: Sprite; box?: number }) {
 }
 
 const head = (sprite: Sprite): Sprite => {
-  const cells = sprite.cells.slice(0, 24);
+  const cells = sprite.cells.slice(0, HEAD_ROWS);
   return cropSprite({ ...sprite, cells, height: cells.length });
 };
 
@@ -108,7 +108,6 @@ export function AvatarEditor({
   const thumbs = useMemo(() => {
     const base: AvatarProfile = { ...value, accessories: [], bag: null };
     return {
-      body: catalog.slots.body.map((b) => thumbOf({ ...value, body: b.id, wheelchair: { ...value.wheelchair, enabled: false } }, ["body", "top", "bottom", "dress", "shoes", "face", "hair"])),
       facial: catalog.slots.facial_hair.map((f) => thumbOf({ ...base, facial_hair: f.id }, ["body", "face", "hair", "facial_hair"], { headOnly: true })),
       hair: catalog.slots.hair.map((h) => thumbOf({ ...base, hair: { ...value.hair, style: h.id } }, ["body", "face", "hair", "facial_hair"], { headOnly: true })),
       top: catalog.slots.top.map((t) => thumbOf({ ...base, dress: null, top: piece("top", t.id, value.top), bottom: value.bottom ?? piece("bottom", "jeans") }, ["top"])),
@@ -180,13 +179,20 @@ export function AvatarEditor({
           "appearance",
           "Apariencia",
           <>
-            <ChoiceGroup legend="Cuerpo">
-              {catalog.slots.body.map((b, i) => (
-                <OptionTile key={b.id} name="avatar-body" value={b.id} label={b.label} checked={value.body === b.id} onSelect={() => set({ body: b.id })}>
-                  <Thumb sprite={thumbs.body[i]} />
-                </OptionTile>
-              ))}
-            </ChoiceGroup>
+            <RangeField
+              id="avatar-height"
+              label="Altura"
+              {...catalog.proportions.height}
+              value={value.height}
+              onChange={(height) => set({ height })}
+            />
+            <RangeField
+              id="avatar-weight"
+              label="Peso"
+              {...catalog.proportions.weight}
+              value={value.weight}
+              onChange={(weight) => set({ weight })}
+            />
             <ChoiceGroup legend="Vello facial">
               {catalog.slots.facial_hair.map((f, i) => (
                 <OptionTile key={f.id} name="avatar-facial" value={f.id} label={f.label} checked={value.facial_hair === f.id} onSelect={() => set({ facial_hair: f.id })}>

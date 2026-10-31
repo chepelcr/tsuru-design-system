@@ -190,3 +190,51 @@ export function CategoryTabs<T extends string>({
     </div>
   );
 }
+
+/** A stepped slider with its current step in words (altura, peso). */
+export function RangeField({
+  id,
+  label,
+  min,
+  max,
+  value,
+  labels,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  min: number;
+  max: number;
+  value: number;
+  /** One label per step, from min to max. */
+  labels: readonly string[];
+  onChange: (value: number) => void;
+}) {
+  const text = labels[value - min] ?? String(value);
+  return (
+    <div className="tsr-range">
+      <div className="tsr-range__head">
+        <label htmlFor={id} className="tsr-range__label">
+          {label}
+        </label>
+        <output htmlFor={id} className="tsr-range__value">
+          {text}
+        </output>
+      </div>
+      <input
+        id={id}
+        type="range"
+        min={min}
+        max={max}
+        step={1}
+        value={value}
+        aria-valuetext={text}
+        onChange={(e) => onChange(Number(e.target.value))}
+      />
+      <div className="tsr-range__ends" aria-hidden="true">
+        <span>{labels[0]}</span>
+        <span>{labels[labels.length - 1]}</span>
+      </div>
+    </div>
+  );
+}

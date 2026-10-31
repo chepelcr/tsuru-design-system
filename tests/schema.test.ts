@@ -79,6 +79,15 @@ describe("avatar schema", () => {
   it("has no access-related field", () => {
     // Appearance never carries speed, role or permission data.
     const keys = Object.keys(DEFAULT_AVATAR).sort();
-    expect(keys).toEqual(["accessories", "bag", "body", "bottom", "dress", "facial_hair", "hair", "shoes", "skin", "top", "v", "wheelchair"]);
+    expect(keys).toEqual(["accessories", "bag", "body", "bottom", "dress", "facial_hair", "hair", "height", "shoes", "skin", "top", "v", "weight", "wheelchair"]);
+  });
+
+  it("clamps altura and peso and reads the old broad body as heavier", () => {
+    expect(normalizeAvatar({ ...DEFAULT_AVATAR, height: 9, weight: -7.6 })).toMatchObject({ height: 2, weight: -2 });
+    expect(normalizeAvatar({ ...DEFAULT_AVATAR, height: "tall" })).toMatchObject({ height: 0 });
+    expect(normalizeAvatar({ v: 2, body: "broad" })).toMatchObject({ body: "standard", weight: 1 });
+    expect(normalizeAvatar(migrateV1({ hair: "short" }))).toMatchObject({ height: 0, weight: 0 });
+    expect(validateAvatar({ ...DEFAULT_AVATAR, height: 1.5 })).toContain("height: integer -2…2");
+    expect(validateAvatar({ ...DEFAULT_AVATAR, weight: 3 })).toContain("weight: integer -2…2");
   });
 });

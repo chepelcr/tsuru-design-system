@@ -3,6 +3,10 @@
   "limits": {
     "accessories": 4
   },
+  "proportions": {
+    "height": { "min": -2, "max": 2, "labels": ["Muy bajo", "Bajo", "Medio", "Alto", "Muy alto"] },
+    "weight": { "min": -2, "max": 2, "labels": ["Muy delgado", "Delgado", "Medio", "Robusto", "Muy robusto"] }
+  },
   "poses": ["stand", "sit"],
   "directions": ["front", "right", "back", "left"],
   "skin_tones": ["#f6d8c2", "#ecc19f", "#d8a47b", "#c4875c", "#a96d47", "#7e4c31", "#553422"],
@@ -81,7 +85,7 @@
     {
       "label": "Chaqueta y mochila",
       "profile": {
-        "v": 2, "body": "standard", "skin": "#7e4c31", "facial_hair": "beard",
+        "v": 2, "body": "standard", "height": 1, "weight": 0, "skin": "#7e4c31", "facial_hair": "beard",
         "hair": { "style": "curly", "color": "#26201d" },
         "top": { "id": "jacket", "color": "#3f7a4a" }, "bottom": { "id": "jeans", "color": "#33507a" }, "dress": null,
         "shoes": { "id": "sneakers", "color": "#f4f1ea" }, "bag": { "id": "backpack", "color": "#2b2f36" },
@@ -92,7 +96,7 @@
     {
       "label": "Vestido y bolsa de tela",
       "profile": {
-        "v": 2, "body": "standard", "skin": "#ecc19f", "facial_hair": "none",
+        "v": 2, "body": "standard", "height": -1, "weight": 1, "skin": "#ecc19f", "facial_hair": "none",
         "hair": { "style": "wavy", "color": "#a3a3a3" },
         "top": null, "bottom": null, "dress": { "id": "sundress", "color": "#e58a7a" },
         "shoes": { "id": "sandals", "color": "#8a5a33" }, "bag": { "id": "tote", "color": "#efe6d2" },
@@ -103,7 +107,7 @@
     {
       "label": "Silla deportiva",
       "profile": {
-        "v": 2, "body": "standard", "skin": "#c4875c", "facial_hair": "none",
+        "v": 2, "body": "standard", "height": 0, "weight": -1, "skin": "#c4875c", "facial_hair": "none",
         "hair": { "style": "long", "color": "#47302a" },
         "top": { "id": "hoodie", "color": "#7a4ca0" }, "bottom": { "id": "jeans", "color": "#33507a" }, "dress": null,
         "shoes": { "id": "sneakers", "color": "#f4f1ea" }, "bag": null,
@@ -114,7 +118,7 @@
     {
       "label": "Blusa y bolso",
       "profile": {
-        "v": 2, "body": "broad", "skin": "#f6d8c2", "facial_hair": "none",
+        "v": 2, "body": "standard", "height": -1, "weight": 2, "skin": "#f6d8c2", "facial_hair": "none",
         "hair": { "style": "curly", "color": "#e0b35c" },
         "top": { "id": "jacket", "color": "#e2b33c" }, "bottom": { "id": "trousers", "color": "#4d5b33" }, "dress": null,
         "shoes": { "id": "sneakers", "color": "#f4f1ea" }, "bag": { "id": "crossbody", "color": "#b2384f" },

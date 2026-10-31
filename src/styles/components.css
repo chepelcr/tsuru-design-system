@@ -839,6 +839,46 @@
   place-items: center;
 }
 
+.tsr-range {
+  display: grid;
+  gap: var(--tsr-space-2);
+}
+.tsr-range__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--tsr-space-3);
+}
+.tsr-range__label {
+  margin: 0;
+  color: var(--tsr-ink);
+  font-weight: var(--tsr-weight-semibold);
+}
+.tsr-range__value {
+  color: var(--tsr-success-ink);
+  font-weight: var(--tsr-weight-semibold);
+}
+.tsr-range input[type="range"] {
+  width: 100%;
+  min-height: var(--tsr-touch);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  accent-color: var(--tsr-success-icon);
+  cursor: pointer;
+}
+.tsr-range input[type="range"]:focus-visible {
+  outline: 3px solid var(--tsr-focus);
+  outline-offset: 2px;
+}
+.tsr-range__ends {
+  display: flex;
+  justify-content: space-between;
+  color: var(--tsr-muted);
+  font-size: var(--tsr-text-xs);
+}
+
 /* ——— Game framing ——— */
 
 .tsr-banner {
@@ -1020,8 +1060,9 @@
   background: var(--tsr-surface-sunken);
   scroll-margin-top: var(--tsr-space-6);
 }
-.tsr-editor__panel.is-active {
-  border-color: color-mix(in srgb, var(--tsr-success-icon) 45%, var(--tsr-line));
+/* One category at a time, chosen with the tabs (at every width). */
+.tsr-editor__panel:not(.is-active) {
+  display: none;
 }
 .tsr-editor__note {
   margin: 0;
@@ -1084,9 +1125,6 @@
     flex: none;
     min-height: var(--tsr-touch);
     font-size: var(--tsr-text-md);
-  }
-  .tsr-editor__panel:not(.is-active) {
-    display: none;
   }
   .tsr-editor__actions {
     display: grid;
